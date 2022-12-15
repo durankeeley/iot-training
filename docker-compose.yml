@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./data/mosquitto/config:/mosquitto/config
+      - ./data/mosquitto/data:/mosquitto/data
+      - ./data/mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+
+  nodered:
+    container_name: nodered
+    image: nodered/node-red
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./data/nodered:/data
+    environment:
+      - TZ=Pacific/Auckland
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
