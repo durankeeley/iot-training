@@ -5,6 +5,7 @@
     "private": true,
     "dependencies": {
         "node-red-dashboard": "~3.2.3",
+        "node-red-node-pi-gpio": "~2.0.5",
         "node-red-node-random": "~0.4.1"
     }
 }

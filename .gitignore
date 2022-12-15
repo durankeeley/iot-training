@@ -1,0 +1,6 @@
+./data/mosquitto/log/mosquitto.log
+data/mosquitto/log/mosquitto.log
+data/nodered/.npm/_logs/*
+./data/nodered/.npm/_logs/*
+data/nodered/.flows.json.backup
+./data/nodered/.flows.json.backup
