@@ -2,7 +2,7 @@
     {
         "id": "b24832b4e999b765",
         "type": "tab",
-        "label": "Dashboard",
+        "label": "Dashboard (View)",
         "disabled": false,
         "info": "",
         "env": []
@@ -10,7 +10,7 @@
     {
         "id": "e5a2232a0ad54701",
         "type": "tab",
-        "label": "API",
+        "label": "API (Controller)",
         "disabled": false,
         "info": "",
         "env": []
@@ -18,35 +18,18 @@
     {
         "id": "2630139d768446f5",
         "type": "tab",
-        "label": "Digital Twin",
+        "label": "Digital Twin (Controller)",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "ed6162e87a14e35e",
-        "type": "junction",
-        "z": "2630139d768446f5",
-        "x": 400,
-        "y": 600,
-        "wires": [
-            [
-                "1d9b601f8c5ee514",
-                "09fd9f48c65c8163"
-            ]
-        ]
-    },
-    {
-        "id": "67918c287c20051e",
-        "type": "junction",
-        "z": "2630139d768446f5",
-        "x": 380,
-        "y": 520,
-        "wires": [
-            [
-                "d8f189e2d5e45a0e"
-            ]
-        ]
+        "id": "a2c878adf4bf8238",
+        "type": "tab",
+        "label": "Model",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
         "id": "6a49aaad01af3b78",
@@ -57,8 +40,45 @@
         "wires": [
             [
                 "074d29f27e7285ac",
-                "abb0c029e294abbf",
-                "c6e26846b2d3ac7d"
+                "f262fe36acd93737"
+            ]
+        ]
+    },
+    {
+        "id": "bb3d9954ee424d7c",
+        "type": "junction",
+        "z": "a2c878adf4bf8238",
+        "x": 380,
+        "y": 580,
+        "wires": [
+            [
+                "090655027f951676",
+                "52afe41275239e3d"
+            ]
+        ]
+    },
+    {
+        "id": "ed6162e87a14e35e",
+        "type": "junction",
+        "z": "a2c878adf4bf8238",
+        "x": 480,
+        "y": 440,
+        "wires": [
+            [
+                "1d9b601f8c5ee514",
+                "09fd9f48c65c8163"
+            ]
+        ]
+    },
+    {
+        "id": "67918c287c20051e",
+        "type": "junction",
+        "z": "a2c878adf4bf8238",
+        "x": 460,
+        "y": 360,
+        "wires": [
+            [
+                "d8f189e2d5e45a0e"
             ]
         ]
     },
@@ -206,27 +226,6 @@
         "className": ""
     },
     {
-        "id": "a9985109a3f39eec",
-        "type": "mqtt in",
-        "z": "b24832b4e999b765",
-        "name": "",
-        "topic": "sensor/digitaltwin/temp",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "c2edd192eba95927",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 240,
-        "y": 300,
-        "wires": [
-            [
-                "6a49aaad01af3b78"
-            ]
-        ]
-    },
-    {
         "id": "074d29f27e7285ac",
         "type": "ui_gauge",
         "z": "b24832b4e999b765",
@@ -291,64 +290,26 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 630,
-        "y": 340,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c6e26846b2d3ac7d",
-        "type": "change",
-        "z": "b24832b4e999b765",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload.temperature",
-                "tot": "msg",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 480,
-        "y": 340,
-        "wires": [
-            [
-                "f262fe36acd93737"
-            ]
-        ]
-    },
-    {
-        "id": "abb0c029e294abbf",
-        "type": "change",
-        "z": "b24832b4e999b765",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "sensorTemperature",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 530,
+        "x": 450,
         "y": 300,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "0a6df1f1fe0fe0de",
+        "type": "link in",
+        "z": "b24832b4e999b765",
+        "name": "model-to-view-temp",
+        "links": [
+            "5e2e4e48331fb62d"
+        ],
+        "x": 325,
+        "y": 300,
+        "wires": [
+            [
+                "6a49aaad01af3b78"
+            ]
         ]
     },
     {
@@ -457,7 +418,7 @@
         "type": "function",
         "z": "e5a2232a0ad54701",
         "name": "validation",
-        "func": "var title = msg.payload;\nvar response = msg.res\nif (title === \"open\") {\n    var msg1 = {\n        payload: \"open\",\n        res: response\n    };\n    return [msg1, null];\n}\nelse if (title === \"closed\") {\n    var msg2 = {\n        payload: \"closed\",\n        res: response\n    };\n    return [msg2, null];\n}\nelse {\n    var msg3 = {\n        payload: \"incorrect value\",\n        res: response\n    };\n    return [null, msg3];\n}",
+        "func": "var title = msg.payload;\nvar response = msg.res\nif (title === \"open\") {\n    var msg1 = {\n        payload: \"open\",\n        res: response\n    };\n    return [msg1, null];\n}\nelse if (title === \"close\") {\n    var msg2 = {\n        payload: \"close\",\n        res: response\n    };\n    return [msg2, null];\n}\nelse {\n    var msg3 = {\n        payload: \"incorrect value\",\n        res: response\n    };\n    return [null, msg3];\n}",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -490,9 +451,9 @@
         "id": "327240bbf41f7b79",
         "type": "comment",
         "z": "e5a2232a0ad54701",
-        "name": "open garage door",
+        "name": "open/close garage door",
         "info": "",
-        "x": 190,
+        "x": 200,
         "y": 380,
         "wires": []
     },
@@ -603,160 +564,6 @@
         "wires": []
     },
     {
-        "id": "64af0812ee890fe0",
-        "type": "comment",
-        "z": "2630139d768446f5",
-        "name": "garage door control",
-        "info": "",
-        "x": 170,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "d49c03bfbd1b8d63",
-        "type": "mqtt in",
-        "z": "2630139d768446f5",
-        "name": "",
-        "topic": "control/digitaltwin/garagedoor",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "c2edd192eba95927",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 200,
-        "y": 540,
-        "wires": [
-            [
-                "67918c287c20051e",
-                "09fd9f48c65c8163"
-            ]
-        ]
-    },
-    {
-        "id": "feadc6cd9f1a1b8c",
-        "type": "link in",
-        "z": "2630139d768446f5",
-        "name": "api-to-digitaltwin-garagedoor",
-        "links": [
-            "cfba18f04f4b3122"
-        ],
-        "x": 305,
-        "y": 580,
-        "wires": [
-            [
-                "ed6162e87a14e35e",
-                "67918c287c20051e"
-            ]
-        ]
-    },
-    {
-        "id": "1d9b601f8c5ee514",
-        "type": "http response",
-        "z": "2630139d768446f5",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 500,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "731ca5836534cb5a",
-        "type": "rpi-gpio out",
-        "z": "2630139d768446f5",
-        "name": "",
-        "pin": "23",
-        "set": "",
-        "level": "0",
-        "freq": "",
-        "out": "out",
-        "bcm": true,
-        "x": 820,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "d8f189e2d5e45a0e",
-        "type": "change",
-        "z": "2630139d768446f5",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "1",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 520,
-        "y": 520,
-        "wires": [
-            [
-                "731ca5836534cb5a"
-            ]
-        ]
-    },
-    {
-        "id": "09fd9f48c65c8163",
-        "type": "delay",
-        "z": "2630139d768446f5",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "2",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 500,
-        "y": 580,
-        "wires": [
-            [
-                "d3ffc1bdb1a656fd"
-            ]
-        ]
-    },
-    {
-        "id": "d3ffc1bdb1a656fd",
-        "type": "change",
-        "z": "2630139d768446f5",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "0",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 660,
-        "y": 580,
-        "wires": [
-            [
-                "731ca5836534cb5a"
-            ]
-        ]
-    },
-    {
         "id": "a16d9ede2d2fae8b",
         "type": "function",
         "z": "2630139d768446f5",
@@ -863,7 +670,8 @@
         "y": 300,
         "wires": [
             [
-                "6183493056a0b27e"
+                "6183493056a0b27e",
+                "8c1a8ef1e61d557f"
             ]
         ]
     },
@@ -879,7 +687,367 @@
         "y": 420,
         "wires": [
             [
-                "bac2cfdaf586bc71"
+                "bac2cfdaf586bc71",
+                "8c1a8ef1e61d557f"
+            ]
+        ]
+    },
+    {
+        "id": "8c1a8ef1e61d557f",
+        "type": "debug",
+        "z": "2630139d768446f5",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5be8e1d767633b46",
+        "type": "function",
+        "z": "2630139d768446f5",
+        "name": "randomGenerator",
+        "func": "// Generate three random values\nvar timestamp = new Date().toISOString();\nvar flowRate = Math.floor(Math.random() * 35);\nvar temperature = Math.floor(Math.random() * 80);\n\n// Combine the values into a single object\nmsg.payload = {\n    \"timestamp\": timestamp,\n    \"flow_rate\": flowRate,\n    \"total_flow\": 345.67,\n    \"total_volume\": 864.2,\n    \"unit\": \"gallons\",\n    \"interval\": \"minutes\",\n    \"temperature\": temperature,\n    \"pressure\": 50.0,\n    \"flow_direction\": \"incoming\",\n    \"flow_alarm\": \"low\",\n    \"status\": \"normal\"\n};\n\n// Return the combined object\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 860,
+        "wires": [
+            [
+                "2dd7ab68123b779b"
+            ]
+        ]
+    },
+    {
+        "id": "8e257582680f29d6",
+        "type": "inject",
+        "z": "2630139d768446f5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 860,
+        "wires": [
+            [
+                "5be8e1d767633b46"
+            ]
+        ]
+    },
+    {
+        "id": "39d84ff6717f79b8",
+        "type": "mqtt out",
+        "z": "2630139d768446f5",
+        "name": "",
+        "topic": "sensor/digitaltwin/watermeter",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c2edd192eba95927",
+        "x": 830,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "2dd7ab68123b779b",
+        "type": "json",
+        "z": "2630139d768446f5",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 630,
+        "y": 860,
+        "wires": [
+            [
+                "39d84ff6717f79b8",
+                "b9de16145100dbb7"
+            ]
+        ]
+    },
+    {
+        "id": "b9de16145100dbb7",
+        "type": "debug",
+        "z": "2630139d768446f5",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "4ae50de30a66a363",
+        "type": "mqtt in",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "topic": "sensor/digitaltwin/temp",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c2edd192eba95927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 580,
+        "wires": [
+            [
+                "bb3d9954ee424d7c"
+            ]
+        ]
+    },
+    {
+        "id": "52afe41275239e3d",
+        "type": "change",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperature",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 620,
+        "wires": [
+            [
+                "5e2e4e48331fb62d"
+            ]
+        ]
+    },
+    {
+        "id": "090655027f951676",
+        "type": "change",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sensorTemperature",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 580,
+        "wires": [
+            [
+                "5e2e4e48331fb62d"
+            ]
+        ]
+    },
+    {
+        "id": "5e2e4e48331fb62d",
+        "type": "link out",
+        "z": "a2c878adf4bf8238",
+        "name": "model-to-view-temp",
+        "mode": "link",
+        "links": [
+            "0a6df1f1fe0fe0de"
+        ],
+        "x": 715,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "64af0812ee890fe0",
+        "type": "comment",
+        "z": "a2c878adf4bf8238",
+        "name": "garage door control",
+        "info": "",
+        "x": 250,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d49c03bfbd1b8d63",
+        "type": "mqtt in",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "topic": "control/digitaltwin/garagedoor",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c2edd192eba95927",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "67918c287c20051e",
+                "09fd9f48c65c8163"
+            ]
+        ]
+    },
+    {
+        "id": "feadc6cd9f1a1b8c",
+        "type": "link in",
+        "z": "a2c878adf4bf8238",
+        "name": "api-to-digitaltwin-garagedoor",
+        "links": [
+            "cfba18f04f4b3122"
+        ],
+        "x": 385,
+        "y": 420,
+        "wires": [
+            [
+                "ed6162e87a14e35e",
+                "67918c287c20051e"
+            ]
+        ]
+    },
+    {
+        "id": "1d9b601f8c5ee514",
+        "type": "http response",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "statusCode": "202",
+        "headers": {},
+        "x": 580,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "731ca5836534cb5a",
+        "type": "rpi-gpio out",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "pin": "23",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 900,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d8f189e2d5e45a0e",
+        "type": "change",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 360,
+        "wires": [
+            [
+                "731ca5836534cb5a"
+            ]
+        ]
+    },
+    {
+        "id": "09fd9f48c65c8163",
+        "type": "delay",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 580,
+        "y": 420,
+        "wires": [
+            [
+                "d3ffc1bdb1a656fd"
+            ]
+        ]
+    },
+    {
+        "id": "d3ffc1bdb1a656fd",
+        "type": "change",
+        "z": "a2c878adf4bf8238",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 420,
+        "wires": [
+            [
+                "731ca5836534cb5a"
             ]
         ]
     }
