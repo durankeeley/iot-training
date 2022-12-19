@@ -8,6 +8,8 @@
 
 **Docker:** This is a platform that allows you to create and run containers. It provides tools and infrastructure to make it easy to build, ship, and run containers in a variety of environments.
 
+**The Internet of Things (IoT):** This refers to the connection of devices (other than traditional computers and smartphones) to the internet, allowing them to send and receive data. These devices can include everyday objects like thermostats, lights, appliances, and even vehicles. Overall, the goal of IoT is to make our lives easier and more convenient by allowing us to control and monitor devices remotely and automatically.
+
 **Digital Twin:** This is a digital version of a real-world product, system, or process. It can be used to simulate and analyze the behavior of the real-world entity, or to control and monitor it remotely.
 
 **Low-code/no-code:** These are software development tools that allow you to build applications without needing to write code. You can use visual interfaces to drag and drop pre-built components and connect them together to create mobile or web apps.
