@@ -48,6 +48,14 @@
         "env": []
     },
     {
+        "id": "026298844e40e6a3",
+        "type": "tab",
+        "label": "Event Sourcing and UUID Generator",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "6a49aaad01af3b78",
         "type": "junction",
         "z": "b24832b4e999b765",
@@ -1522,5 +1530,182 @@
         "x": 360,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "831288f2f26842ed",
+        "type": "inject",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 140,
+        "wires": [
+            [
+                "e881a81a46391434"
+            ]
+        ]
+    },
+    {
+        "id": "e881a81a46391434",
+        "type": "function",
+        "z": "026298844e40e6a3",
+        "name": "function 1",
+        "func": "var lut = []; for (var i = 0; i < 256; i++) { lut[i] = (i < 16 ? '0' : '') + (i).toString(16); }\nfunction randomUUID() {\n    var d0 = Math.random() * 0xffffffff | 0;\n    var d1 = Math.random() * 0xffffffff | 0;\n    var d2 = Math.random() * 0xffffffff | 0;\n    var d3 = Math.random() * 0xffffffff | 0;\n    return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + '-' +\n        lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + '-' + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + '-' +\n        lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + '-' + lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +\n        lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];\n};\n\nvar timestamp = new Date().toISOString();\nvar value1 = Math.floor(Math.random() * 35);\nvar value2 = Math.floor(Math.random() * 80);\n\nvar guidId = randomUUID();\n\n// Combine the values into a single object\nmsg.payload = {\n    id: guidId,\n    timestamp: timestamp,\n    temperature: value1,\n    humidity: value2\n};\n\nglobal.set(guidId, msg.payload);\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 140,
+        "wires": [
+            [
+                "bf3ee38a20f63aa7"
+            ]
+        ]
+    },
+    {
+        "id": "bf3ee38a20f63aa7",
+        "type": "debug",
+        "z": "026298844e40e6a3",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "86a8025eb8ec7056",
+        "type": "http in",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "url": "/api/sensor/digitaltwin/temp/*",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 480,
+        "wires": [
+            [
+                "1d52f7f2726b0af1"
+            ]
+        ]
+    },
+    {
+        "id": "89f3066667eabee7",
+        "type": "http response",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 640,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "1d52f7f2726b0af1",
+        "type": "function",
+        "z": "026298844e40e6a3",
+        "name": "function 2",
+        "func": "var response = msg.res\nvar urlParts = msg.req.url.split('/');\nvar variableName = urlParts[urlParts.length - 1];\n\nif (global.get(variableName)) {\n    msg = { \n        payload: global.get(variableName),\n        res: response\n        };\n    return [msg, null];\n} else {\n    msg = { \n        payload: 'The ID ' + variableName + ' does not exist.',\n        res: response\n        };\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 480,
+        "wires": [
+            [
+                "89f3066667eabee7"
+            ],
+            [
+                "60e0fb6fa5238ff6"
+            ]
+        ]
+    },
+    {
+        "id": "60e0fb6fa5238ff6",
+        "type": "http response",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "statusCode": "400",
+        "headers": {},
+        "x": 640,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "a9bf46f65b943b17",
+        "type": "http in",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "url": "/api/sensor/digitaltwin/temp",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "66cbc82745336f0c"
+            ]
+        ]
+    },
+    {
+        "id": "a0e8c102ceed32a0",
+        "type": "function",
+        "z": "026298844e40e6a3",
+        "name": "function 3",
+        "func": "var messageTimestamp = msg.payload.timestamp;\nvar temperature = msg.payload.temperature;\nvar humidity = msg.payload.humidity;\nvar response = msg.res\n\nvar lut = []; for (var i = 0; i < 256; i++) { lut[i] = (i < 16 ? '0' : '') + (i).toString(16); }\nfunction randomUUID() {\n    var d0 = Math.random() * 0xffffffff | 0;\n    var d1 = Math.random() * 0xffffffff | 0;\n    var d2 = Math.random() * 0xffffffff | 0;\n    var d3 = Math.random() * 0xffffffff | 0;\n    return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + '-' +\n        lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + '-' + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + '-' +\n        lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + '-' + lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +\n        lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];\n};\n\nvar messageUUID = randomUUID();\n\nmsg.payload = {\n    id: messageUUID,\n    timestamp: messageTimestamp,\n    temperature: temperature,\n    humidity: humidity\n};\n\nglobal.set(messageUUID, msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "89f3066667eabee7"
+            ]
+        ]
+    },
+    {
+        "id": "66cbc82745336f0c",
+        "type": "json",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 330,
+        "y": 360,
+        "wires": [
+            [
+                "a0e8c102ceed32a0"
+            ]
+        ]
     }
 ]
