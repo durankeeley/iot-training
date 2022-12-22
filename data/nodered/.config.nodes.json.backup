@@ -695,5 +695,26 @@
                 "file": "/data/node_modules/node-red-node-pi-gpio/36-rpi-gpio.js"
             }
         }
+    },
+    "node-red-node-email": {
+        "name": "node-red-node-email",
+        "version": "1.18.2",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "email": {
+                "name": "email",
+                "types": [
+                    "e-mail",
+                    "e-mail in",
+                    "e-mail mta"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-node-email",
+                "file": "/data/node_modules/node-red-node-email/61-email.js"
+            }
+        }
     }
 }

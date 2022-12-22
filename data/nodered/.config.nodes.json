@@ -716,5 +716,25 @@
                 "file": "/data/node_modules/node-red-node-email/61-email.js"
             }
         }
+    },
+    "node-red-contrib-postgresql": {
+        "name": "node-red-contrib-postgresql",
+        "version": "0.11.3",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "postgresql": {
+                "name": "postgresql",
+                "types": [
+                    "postgreSQLConfig",
+                    "postgresql"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-postgresql",
+                "file": "/data/node_modules/node-red-contrib-postgresql/postgresql.js"
+            }
+        }
     }
 }

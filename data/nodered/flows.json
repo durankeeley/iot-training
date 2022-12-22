@@ -271,6 +271,31 @@
         "className": ""
     },
     {
+        "id": "01d48e6a2a3695d5",
+        "type": "postgreSQLConfig",
+        "name": "postgres",
+        "host": "127.0.0.1",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "true",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres",
+        "userFieldType": "str",
+        "password": "postgres",
+        "passwordFieldType": "str"
+    },
+    {
         "id": "074d29f27e7285ac",
         "type": "ui_gauge",
         "z": "b24832b4e999b765",
@@ -1706,6 +1731,22 @@
             [
                 "a0e8c102ceed32a0"
             ]
+        ]
+    },
+    {
+        "id": "06e2048b9aa649ea",
+        "type": "postgresql",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "query": "SELECT * FROM ;",
+        "postgreSQLConfig": "01d48e6a2a3695d5",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 570,
+        "y": 240,
+        "wires": [
+            []
         ]
     }
 ]

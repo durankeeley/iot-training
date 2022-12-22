@@ -24,3 +24,18 @@ services:
       - mosquitto
     links:
       - "mosquitto:mqtt"
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - ./data/postgres/db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
