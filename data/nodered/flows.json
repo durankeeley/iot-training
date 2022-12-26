@@ -1348,12 +1348,12 @@
         "type": "postgresql",
         "z": "026298844e40e6a3",
         "name": "",
-        "query": "SELECT nspname\nFROM pg_catalog.pg_namespace\nWHERE nspname='public';",
+        "query": "/*\nSELECT nspname\nFROM pg_catalog.pg_namespace\nWHERE nspname='public';\n*/\n\nSELECT nspname\nFROM pg_catalog.pg_namespace;\n",
         "postgreSQLConfig": "01d48e6a2a3695d5",
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 430,
+        "x": 410,
         "y": 200,
         "wires": [
             [
@@ -1367,17 +1367,86 @@
         "type": "function",
         "z": "026298844e40e6a3",
         "name": "function 4",
-        "func": "var db = msg.payload[0].nspname;\nif (db === \"public\") {\n    msg = {\n        payload: \"yip\"\n    };\n    return msg;\n};",
+        "func": "const db = msg.payload[0]?.nspname;\nconst response = (db === \"public\") ? { payload: \"yip\" } : { payload: \"nope\" };\nreturn [(db === \"public\") ? response : null, (db !== \"public\") ? response : null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 240,
+        "wires": [
+            [
+                "bf3ee38a20f63aa7"
+            ],
+            [
+                "bf3ee38a20f63aa7"
+            ]
+        ]
+    },
+    {
+        "id": "f4b8acbfc0debaa8",
+        "type": "postgresql",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "query": "",
+        "postgreSQLConfig": "01d48e6a2a3695d5",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "bf3ee38a20f63aa7"
+            ]
+        ]
+    },
+    {
+        "id": "fa38c60ad0eda75b",
+        "type": "function",
+        "z": "026298844e40e6a3",
+        "name": "function 5",
+        "func": "//msg.query = \"CREATE DATABASE mydatabase;\";\n\nmsg.query = \"SELECT nspname FROM pg_catalog.pg_namespace;\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 680,
-        "y": 240,
+        "x": 240,
+        "y": 280,
         "wires": [
             [
-                "bf3ee38a20f63aa7"
+                "f4b8acbfc0debaa8"
+            ]
+        ]
+    },
+    {
+        "id": "d51c53db12aef7b9",
+        "type": "inject",
+        "z": "026298844e40e6a3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 280,
+        "wires": [
+            [
+                "fa38c60ad0eda75b"
             ]
         ]
     }
