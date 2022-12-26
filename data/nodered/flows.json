@@ -32,22 +32,6 @@
         "env": []
     },
     {
-        "id": "791ee090065d0354",
-        "type": "tab",
-        "label": "Other Examples",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "416b4cfa723dacfc",
-        "type": "tab",
-        "label": "Other Examples Dashboard",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "026298844e40e6a3",
         "type": "tab",
         "label": "Event Sourcing and UUID Generator",
@@ -251,36 +235,16 @@
         "className": ""
     },
     {
-        "id": "2afe8db4ac72fac1",
-        "type": "ui_tab",
-        "name": "Other Examples",
-        "icon": "dashboard",
-        "order": 2,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "887cfe5264410fb8",
-        "type": "ui_group",
-        "name": "Default",
-        "tab": "2afe8db4ac72fac1",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "01d48e6a2a3695d5",
         "type": "postgreSQLConfig",
         "name": "postgres",
-        "host": "127.0.0.1",
+        "host": "postgres",
         "hostFieldType": "str",
         "port": "5432",
         "portFieldType": "num",
         "database": "postgres",
         "databaseFieldType": "str",
-        "ssl": "true",
+        "ssl": "false",
         "sslFieldType": "bool",
         "applicationName": "",
         "applicationNameType": "str",
@@ -1202,361 +1166,6 @@
         "wires": []
     },
     {
-        "id": "fc450b161d625f58",
-        "type": "inject",
-        "z": "791ee090065d0354",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 380,
-        "y": 380,
-        "wires": [
-            [
-                "3df606d0bd6e8f7e"
-            ]
-        ]
-    },
-    {
-        "id": "3df606d0bd6e8f7e",
-        "type": "http request",
-        "z": "791ee090065d0354",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://releases.ubuntu.com/jammy/",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 530,
-        "y": 380,
-        "wires": [
-            [
-                "d35fe32c0eff3d4f"
-            ]
-        ]
-    },
-    {
-        "id": "d35fe32c0eff3d4f",
-        "type": "html",
-        "z": "791ee090065d0354",
-        "name": "",
-        "property": "payload",
-        "outproperty": "payload",
-        "tag": "title",
-        "ret": "text",
-        "as": "single",
-        "x": 670,
-        "y": 380,
-        "wires": [
-            [
-                "873182f13d652e69"
-            ]
-        ]
-    },
-    {
-        "id": "873182f13d652e69",
-        "type": "function",
-        "z": "791ee090065d0354",
-        "name": "",
-        "func": "var title = msg.payload[0];\nvar beta = \"Ubuntu 22.04 LTS (Jammy Jellyfish) Beta\";\nif (title === beta){\nvar msg1 = {\n    payload: title\n};\nreturn [msg1, null];\n}\nelse {\nvar msg2 = {\n    topic: \"New version of \" + title + \" is released.\",\n    payload: title\n};\nreturn [null, msg2];    \n}\n",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 800,
-        "y": 380,
-        "wires": [
-            [
-                "fdac3222d5c6b7f7"
-            ],
-            [
-                "6d84b50de5ef4402"
-            ]
-        ]
-    },
-    {
-        "id": "fdac3222d5c6b7f7",
-        "type": "delay",
-        "z": "791ee090065d0354",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "5",
-        "timeoutUnits": "minutes",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 600,
-        "y": 300,
-        "wires": [
-            [
-                "3df606d0bd6e8f7e"
-            ]
-        ]
-    },
-    {
-        "id": "6d84b50de5ef4402",
-        "type": "debug",
-        "z": "791ee090065d0354",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 970,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "f680196db207ccb0",
-        "type": "inject",
-        "z": "791ee090065d0354",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 380,
-        "y": 540,
-        "wires": [
-            [
-                "41379d188394dd22"
-            ]
-        ]
-    },
-    {
-        "id": "41379d188394dd22",
-        "type": "http request",
-        "z": "791ee090065d0354",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://www.pbtech.co.nz/product/MONAOC52400/AOC-24G2SE-24-Gaming-Monitor-VA-Panel-1920x1080-1M",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 530,
-        "y": 540,
-        "wires": [
-            [
-                "cd779ec03d473352"
-            ]
-        ]
-    },
-    {
-        "id": "cd779ec03d473352",
-        "type": "html",
-        "z": "791ee090065d0354",
-        "name": "",
-        "property": "payload",
-        "outproperty": "payload",
-        "tag": "a.p_stock_title_dd",
-        "ret": "text",
-        "as": "multi",
-        "x": 710,
-        "y": 540,
-        "wires": [
-            [
-                "d74e1012b21d5a6a"
-            ]
-        ]
-    },
-    {
-        "id": "d74e1012b21d5a6a",
-        "type": "link out",
-        "z": "791ee090065d0354",
-        "name": "pbtech-example-OUT",
-        "mode": "link",
-        "links": [
-            "9629b00bf9fdae6f"
-        ],
-        "x": 895,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "5813d4e562b3c991",
-        "type": "inject",
-        "z": "791ee090065d0354",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 380,
-        "y": 600,
-        "wires": [
-            [
-                "a8666f63d7fed7fb"
-            ]
-        ]
-    },
-    {
-        "id": "a8666f63d7fed7fb",
-        "type": "http request",
-        "z": "791ee090065d0354",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://www.pbtech.co.nz/product/VGAPOW27910/Powercolor-AMD-Radeon-RX-7900-XTX-Graphics-Card-24",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 530,
-        "y": 600,
-        "wires": [
-            [
-                "549762805ee8be97"
-            ]
-        ]
-    },
-    {
-        "id": "549762805ee8be97",
-        "type": "html",
-        "z": "791ee090065d0354",
-        "name": "",
-        "property": "payload",
-        "outproperty": "payload",
-        "tag": "a.p_stock_title_dd",
-        "ret": "text",
-        "as": "multi",
-        "x": 710,
-        "y": 600,
-        "wires": [
-            [
-                "d74e1012b21d5a6a"
-            ]
-        ]
-    },
-    {
-        "id": "e980c271a0a98e9c",
-        "type": "comment",
-        "z": "791ee090065d0354",
-        "name": "check if released every 5m",
-        "info": "",
-        "x": 330,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "61b56e243b10aac5",
-        "type": "comment",
-        "z": "791ee090065d0354",
-        "name": "check if in stock at pb tech",
-        "info": "",
-        "x": 330,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "ad891425bb77e4f6",
-        "type": "ui_text",
-        "z": "416b4cfa723dacfc",
-        "group": "887cfe5264410fb8",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "PB Stock",
-        "format": "{{msg.payload}}",
-        "layout": "col-center",
-        "className": "",
-        "x": 360,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "9629b00bf9fdae6f",
-        "type": "link in",
-        "z": "416b4cfa723dacfc",
-        "name": "pbtech-example-IN",
-        "links": [
-            "d74e1012b21d5a6a"
-        ],
-        "x": 225,
-        "y": 120,
-        "wires": [
-            [
-                "ad891425bb77e4f6",
-                "620fb89d579eedb4"
-            ]
-        ]
-    },
-    {
-        "id": "620fb89d579eedb4",
-        "type": "debug",
-        "z": "416b4cfa723dacfc",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 180,
-        "wires": []
-    },
-    {
         "id": "831288f2f26842ed",
         "type": "inject",
         "z": "026298844e40e6a3",
@@ -1581,7 +1190,8 @@
         "y": 140,
         "wires": [
             [
-                "e881a81a46391434"
+                "e881a81a46391434",
+                "06e2048b9aa649ea"
             ]
         ]
     },
@@ -1616,7 +1226,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 580,
+        "x": 800,
         "y": 140,
         "wires": []
     },
@@ -1738,15 +1348,37 @@
         "type": "postgresql",
         "z": "026298844e40e6a3",
         "name": "",
-        "query": "SELECT * FROM ;",
+        "query": "SELECT nspname\nFROM pg_catalog.pg_namespace\nWHERE nspname='public';",
         "postgreSQLConfig": "01d48e6a2a3695d5",
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 570,
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "d20730963084e3e0",
+                "bf3ee38a20f63aa7"
+            ]
+        ]
+    },
+    {
+        "id": "d20730963084e3e0",
+        "type": "function",
+        "z": "026298844e40e6a3",
+        "name": "function 4",
+        "func": "var db = msg.payload[0].nspname;\nif (db === \"public\") {\n    msg = {\n        payload: \"yip\"\n    };\n    return msg;\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
         "y": 240,
         "wires": [
-            []
+            [
+                "bf3ee38a20f63aa7"
+            ]
         ]
     }
 ]
